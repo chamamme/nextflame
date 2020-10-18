@@ -1,17 +1,23 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { connect } from 'react-redux'
+import { changeTheme } from '../redux/entities/app/app.actions'
+import styles from '../styles/Home.module.css';
+import { APP_CHANGE_THEME } from "../redux/action.types";
 
-export default function Home() {
+
+function Home(props) {
+console.log(props)
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ backgroundColor: props._.app.theme }}>
       <Head>
-        <title>Create Next App</title>
+        <title>{props._.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">{props._.app.name}</a>
         </h1>
 
         <p className={styles.description}>
@@ -63,3 +69,8 @@ export default function Home() {
     </div>
   )
 }
+
+
+const mapStateToProp = (state, props) => { return {_:  state}};
+
+export default connect(mapStateToProp)(Home)
